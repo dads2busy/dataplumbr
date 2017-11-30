@@ -25,7 +25,7 @@ fix_century <- function(date_ymd = lubridate::ymd("2020-03-26"), cut_date_ymd = 
     })
 
     yr <- lubridate::year(date) %% 100
-    lubridate::year(date) <- ifelse(date > cut_date, 1900 + yr, 2000 + yr)
+    lubridate::year(date) <- ifelse(lubridate::year(date) > lubridate::year(cut_date), 1900 + yr, lubridate::year(date))
     date
 }
 
