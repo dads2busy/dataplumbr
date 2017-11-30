@@ -1,2 +1,2 @@
 # dataplumbr
-Functions supporting Secure and Federated Record Linkage
+Useful Functions for the Data Plumber/Engineer
