@@ -9,6 +9,18 @@ remove_non_alphanum <- function(string) {
     gsub("[^[:alnum:] ]", "", string)
 }
 
+#' Convert string to character vector
+#'
+#' @param string A character string.
+#' @param delimeter Optional. Default ",".
+#' @export
+#' @examples
+#' remove_non_alphanum("222-44-6666")
+#' [1] "222446666"
+string2vector <- function(string, delimeter=",") {
+    unlist(strsplit(string, delimeter))
+}
+
 #' Return everything before the first occurence of provided separator.
 #'
 #' @param string A character string.
