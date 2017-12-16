@@ -4,7 +4,7 @@
 \alias{move_suffix}
 \title{Move provided suffixes to separate column (and remove suffix from name column).}
 \usage{
-move_suffix(df, name_field, suffix_list)
+move_suffix(df, name_field, suffix_list, return_type = "dt")
 }
 \arguments{
 \item{df}{A data.frame or data.table with a suffix containing name column.}
@@ -12,6 +12,8 @@ move_suffix(df, name_field, suffix_list)
 \item{name_field}{Name of the name column/field.}
 
 \item{suffix_list}{A list of suffixes to move.}
+
+\item{return_type}{Type of data object to return, "dt" (data.table) or "df" (data.frame). Default "dt".}
 }
 \description{
 Move provided suffixes to separate column (and remove suffix from name column).
