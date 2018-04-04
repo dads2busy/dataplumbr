@@ -27,3 +27,12 @@ move_suffix <- function(df, name_field, suffix_list, return_type = "dt") {
     ifelse(return_type == "df", d <- data.table::setDF(dt), d <- dt)
     d
 }
+
+#' Make R compliant names that use an underscore rather than a dot.
+#'
+#' @char A character vector
+#' @export
+#' @examples
+#' make_names(c("name with space", "name,with,commas"))
+#' [1] "name_with_space"  "name_with_commas"
+make_names <- function(char) {gsub("\\.", "_", make.names(char))}
