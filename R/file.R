@@ -11,6 +11,20 @@ file.unzip2temp <- function(zipfilepath) {
     tempdir
 }
 
+#' Download and Unzip File to Temp Directory and Return File Paths
+#'
+#' @param url url to download the zip file.
+#' @export
+file.download_unzip2temp <- function(url) {
+    tempdir <- tempdir()
+    file.remove(list.files(tempdir))
+    tempfile <- file.path(tempdir, basename(url))
+    download.file(url, tempfile)
+    utils::unzip(tempfile, exdir = tempdir)
+    file.remove(tempfile)
+    list.files(tempdir, full.names = T)
+}
+
 #' Find By File Type in Directory
 #'
 #' @param type Type of file file extension without a period, e.g. "zip", "shp".
