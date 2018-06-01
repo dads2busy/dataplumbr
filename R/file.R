@@ -16,9 +16,9 @@ file.unzip2temp <- function(zipfilepath) {
 #' @param url url to download the zip file.
 #' @export
 file.download_unzip2temp <- function(url) {
-    browser()
+    # browser()
     tempdir <- tempdir()
-    file.remove(list.files(tempdir, full.names = T))
+    unlink(list.files(tempdir, full.names = T), recursive = T)
     tempfile <- file.path(tempdir, basename(url))
     download.file(url, tempfile)
     utils::unzip(tempfile, exdir = tempdir)
