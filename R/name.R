@@ -19,7 +19,7 @@ move_suffix <- function(df, name_field, suffix_list, return_type = "dt") {
     lapply(suffix_list, function(sfx) {
         field <- dt[, get(name_field)]
         dt[
-            field %like% paste0(" ", sfx), suffix := sfx
+            grepl(paste0(" ", sfx), field) == TRUE, suffix := sfx
         ][
             , eval(name_field):=sub(paste0(" ", sfx), "", field)
         ]

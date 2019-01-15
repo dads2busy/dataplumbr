@@ -39,8 +39,11 @@ fix_century <- function(date_ymd = lubridate::ymd("2020-03-26"), cut_date_ymd = 
 #' @import data.table
 #' @export
 #' @examples
-#' fix_century("2049-11-30")
-#' [1] "1949-11-30"
+#' df_with_dob_column <- data.frame(dob = c("11/13/1968"))
+#' df_with_parsed_dob <- parse_dob_to_cols(df_with_dob_column, date_field = "dob", date_format = "mdy")
+#' df_with_parsed_dob
+#'          dob birth_yr birth_mo birth_dy
+#' 1 11/13/1968     1968       11       13
 parse_dob_to_cols <- function(df, date_field, date_format = "ymd") {
     dt <- data.table::setDT(df)
     if(date_format == "ymd") {
@@ -52,5 +55,5 @@ parse_dob_to_cols <- function(df, date_field, date_format = "ymd") {
         dt[, birth_mo := lubridate::month(lubridate::mdy(dt[, get(date_field)]))]
         dt[, birth_dy := lubridate::day(lubridate::mdy(dt[, get(date_field)]))]
     }
-    data.table::setDT(dt)
+    data.table::setDF(dt)
 }
