@@ -35,4 +35,8 @@ move_suffix <- function(df, name_field, suffix_list, return_type = "dt") {
 #' @examples
 #' make_names(c("name with space", "name,with,commas"))
 #' [1] "name_with_space"  "name_with_commas"
-make_names <- function(char) {gsub("\\.", "_", make.names(char))}
+make_names <- function(names, lower = F) {
+    . <- gsub("\\.", "_", make.names(names))
+    if (lower == T) . <- tolower(.)
+    .
+}
