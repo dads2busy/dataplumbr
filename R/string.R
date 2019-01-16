@@ -68,7 +68,7 @@ get_between_separators <- function(string = "", first_separator = ",", second_se
 #' [1] " and gosh darn it; people like me."
 #' get_after_last_separator(str, separator = ",", include_sep_in_output = T)
 #' [1] ", and gosh darn it; people like me."
-get_after_last_separator <- function(string = "ab?c.net", separator = ".", include_sep_in_output = FALSE) {
+get_after_last_separator <- function(string = "a.b?c.net", separator = ".", include_sep_in_output = FALSE) {
     special_chars <- c(".", "?", "#")
     if (separator %in% special_chars) sep <- paste0("\\", separator) else sep <- separator
     re <- paste0(sep, "[^", sep, "]*$")
