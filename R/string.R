@@ -34,8 +34,12 @@ string2vector <- function(string, delimeter=",") {
 #' @examples
 #' get_before_separator("I am smart enough, good looking enough, and gosh darn it, people like me.")
 #' [1] "I am smart enough"
-get_before_separator <-  function(string = "", separator = ",") {
-    trimws(substr(string, 1, regexpr(separator, string) - 1))
+get_before_first_separator <-  function(string = "", separator = ",", include_sep_in_output = FALSE) {
+    special_chars <- c(".", "?", "#")
+    if (separator %in% special_chars) sep <- paste0("\\", separator) else sep <- separator
+    out <- trimws(substr(string, 1, regexpr(sep, string)))
+    if (include_sep_in_output == FALSE) out <- substr(out, 1, nchar(out) - 1)
+    out
 }
 
 #' Return everything between first occurence of first separator and first occurence
@@ -51,10 +55,15 @@ get_before_separator <-  function(string = "", separator = ",") {
 #' [1] "good looking enough"
 #' get_between_separators(str, second_separator = ";")
 #' [1] "good looking enough, and gosh darn it"
-get_between_separators <- function(string = "", first_separator = ",", second_separator = ",") {
-    idx_fst_sep <- regexpr(first_separator, string) + 1
-    idx_scd_sep <- regexpr(second_separator, substr(string, idx_fst_sep, nchar(string))) + idx_fst_sep - 2
-    trimws(substr(string, idx_fst_sep, idx_scd_sep))
+get_between_separators <- function(string = "", first_separator = ",", second_separator = ",", include_sep_in_output = FALSE) {
+    special_chars <- c(".", "?", "#")
+    if (first_separator %in% special_chars) first_sep <- paste0("\\", first_separator) else first_sep <- first_separator
+    if (second_separator %in% special_chars) second_sep <- paste0("\\", second_separator) else second_sep <- second_separator
+    idx_fst_sep <- regexpr(first_sep, string)
+    idx_scd_sep <- regexpr(second_sep, substr(string, idx_fst_sep + 1, nchar(string))) + idx_fst_sep
+    out <- trimws(substr(string, idx_fst_sep, idx_scd_sep))
+    if (include_sep_in_output == FALSE) out <- substr(out, 2, nchar(out) - 1)
+    out
 }
 
 #' Return everything between after last occurence of separator and end of the string.
