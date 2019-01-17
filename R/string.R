@@ -2,6 +2,7 @@
 #' Optionally remove spaces.
 #'
 #' @param string A character string.
+#' @param keep_spaces Don't remove spaces.
 #' @export
 #' @examples
 #' remove_non_alphanum("222-44-6666")
@@ -30,6 +31,7 @@ string2vector <- function(string, delimeter=",") {
 #'
 #' @param string A character string.
 #' @param separator Optional. Default ",".
+#' @param include_sep_in_output Optional. Include the separator in the output. Default FALSE.
 #' @export
 #' @examples
 #' get_before_separator("I am smart enough, good looking enough, and gosh darn it, people like me.")
@@ -48,6 +50,7 @@ get_before_first_separator <-  function(string = "", separator = ",", include_se
 #' @param string A character string.
 #' @param first_separator Optional. Default ",".
 #' @param second_separator Optional. Default ",".
+#' @param include_sep_in_output Optional. Include the separators in the output. Default FALSE.
 #' @export
 #' @examples
 #' str <- "I am smart enough, good looking enough, and gosh darn it; people like me."
@@ -70,6 +73,7 @@ get_between_separators <- function(string = "", first_separator = ",", second_se
 #'
 #' @param string A character string.
 #' @param separator Default ".".
+#' @param include_sep_in_output Optional. Include the separator in the output. Default FALSE.
 #' @export
 #' @examples
 #' str <- "I am smart enough, good looking enough, and gosh darn it; people like me."
