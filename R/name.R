@@ -20,23 +20,49 @@ move_suffix <- function(df, name_field, suffix_list, return_type = "dt") {
         field <- dt[, get(name_field)]
         dt[
             grepl(paste0(" ", sfx), field) == TRUE, suffix := sfx
-        ][
-            , eval(name_field):=sub(paste0(" ", sfx), "", field)
-        ]
+            ][
+                , eval(name_field):=sub(paste0(" ", sfx), "", field)
+                ]
     })
     ifelse(return_type == "df", d <- data.table::setDF(dt), d <- dt)
     d
 }
 
-#' Make R compliant names that use an underscore rather than a dot.
-#'
+#' Convert camel case to underscore separated words
+#' @param name_list List of camel case strings to convert.
+#' @export
+#' @examples
+#' fix_camel_case(c("I'mACamel", "NoYouAreNot"))
+#' [1] "I'm_A_Camel"    "No_You_Are_Not"
+fix_camel_case <- function(name_list = c("I'mACamel")) {
+    o <- gsub("([[:upper:]])", "_\\1", name_list)
+    o <- gsub("(^_)", "", o)
+    o
+}
+
+#' Standardize column names
+#' Make lower case R compliant names that use an underscore rather than a dot
+#' and remove apostrophes. Multiple underscores are reduced to one.
+#' @param name_list List of column names.
+#' @param fix_camel Change camel case to underscores before processing.
 #' @char A character vector
 #' @export
 #' @examples
-#' make_names(c("name with space", "name,with,commas"))
-#' [1] "name_with_space"  "name_with_commas"
-make_names <- function(names, lower = F) {
-    . <- gsub("\\.", "_", make.names(names))
-    if (lower == T) . <- tolower(.)
-    .
+#' standard_col_names(c("first.name", "LastName"))
+#' [1] "first_name" "lastname"
+#' standard_col_names(c("first.name", "LastName"), fix_camel = T)
+#' [1] "first_name" "last_name"
+standard_col_names <- function(name_list = c("first.name", "LastName"), fix_camel = FALSE) {
+    o <- name_list
+    ## remove camel case
+    if (fix_camel == TRUE) o <- fix_camel_case(o)
+    ## standardize
+    o <- tolower(o)
+    o <- gsub("'", "", o)
+    o <- gsub("[[:punct:]]", "_", o)
+    o <- gsub("_+", "_", o)
+    o <- make.unique(o, sep = "_")
+    o
 }
+
+

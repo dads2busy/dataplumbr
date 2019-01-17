@@ -29,6 +29,7 @@ fix_century <- function(date_ymd = lubridate::ymd("2020-03-26"), cut_date_ymd = 
     date
 }
 
+#' Parse DOB to Separate Year, Month, Day Columns
 #' Create separate year, month, day columns from ymd or mdy formatted date.
 #'
 #' @param df data.frame or data.table with a date field.
