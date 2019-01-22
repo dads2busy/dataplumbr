@@ -59,7 +59,7 @@ standard_col_names <- function(name_list = c("first.name", "LastName"), fix_came
     ## standardize
     o <- tolower(o)
     o <- gsub("'", "", o)
-    o <- gsub("[[:punct:]]", "_", o)
+    o <- gsub("[[:punct:] ]", "_", o)
     o <- gsub("_+", "_", o)
     o <- make.unique(o, sep = "_")
     o
