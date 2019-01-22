@@ -47,3 +47,17 @@ split_hyphenated <- function(df, name_field, return_type = "dt") {
     ifelse(return_type == "df", d <- data.table::setDF(dt), d <- dt)
     d
 }
+
+#' Checks if provided variable is null, na, or of length 0
+#'
+#' @param x Variable provided.
+#' @export
+#' @examples
+#' is_blank("")
+#' [1] TRUE
+is_blank <- function(x) {
+    return(is.null(x) |
+               length(x) == 0 |
+               is.na(x) |
+               x == "")
+}
