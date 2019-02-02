@@ -61,3 +61,14 @@ is_blank <- function(x) {
                is.na(x) |
                x == "")
 }
+
+#' Deduplication chooser
+#' Majority rules, ties goes to lowest value after ordering, so most recent if a date or time.
+#'
+#' @param df Data.frame or data.table
+#'
+dedup_choice <- function(df) {
+  data.table::setDT(df)
+    for (j in colnames(dt)) data.table::set(dt, j = j, value = dt[get(j) != "", .N, j][order(-N)][, ..j][1])
+  dt[1]
+}
