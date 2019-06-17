@@ -90,3 +90,5 @@ get_after_last_separator <- function(string = "a.b?c.net", separator = ".", incl
     if (include_sep_in_output == FALSE) out <- substr(out, 2, nchar(out))
     out
 }
+
+

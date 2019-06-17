@@ -68,7 +68,72 @@ is_blank <- function(x) {
 #' @param df Data.frame or data.table
 #'
 dedup_choice <- function(df) {
-  data.table::setDT(df)
-    for (j in colnames(dt)) data.table::set(dt, j = j, value = dt[get(j) != "", .N, j][order(-N)][, ..j][1])
-  dt[1]
+    dt <- data.table::setDT(df)
+    for (j in colnames(dt)) {
+        data.table::set(dt, j = j, value = dt[get(j) != "", .N, j][order(-N)][, ..j][1])
+    }
+    dt[1]
 }
+
+dedup_choice_by_key <- function(df, key = "uid") {
+    #browser()
+    if (exists("out_dt") == TRUE) rm(out_dt, envir = globalenv())
+
+    dt <- data.table::setDT(df)
+    unique_keys <- unique(dt[, get(key)])
+    key_cnt <- length(unique_keys)
+    pb <- progress::progress_bar$new(format = "[:bar] :current/:total :percent eta: :eta", total = key_cnt)
+
+    for (k in unique_keys) {
+        pb$tick()
+        g <- dt[get(key)==k]
+        r <- dedup_choice(g)
+        if (exists("out_dt") == FALSE) out_dt <- r else out_dt <- rbindlist(list(out_dt, r))
+    }
+
+    out_dt
+}
+
+#' Create new data.table rows for each combination of first and last name
+#'
+#' @param single_row_dt Data.table with one row/record.
+#' @param fname_col First name column name.
+#' @param lname_col Last name column name.
+#' @param delims Delimters to split string by.
+#' @export
+#' @example
+#' dt <-
+#' data.table(
+#'   id = c(1, 2),
+#'   fname = c("Aaron David", "Blaine-Myers"),
+#'   lname = c("Schroeder-Dingdong", "Dingbat Tumbleweed"),
+#'   dob = "11/13/1968"
+#' )
+#' final_dt <-
+#' dt[, new_row_per_string_item(.SD, fname_col = "fname", lname_col = "lname"), id]
+new_row_per_string_item <- function(single_row_dt, fname_col, lname_col, delims = "[-, ]") {
+    #browser()
+    dt <- data.table::setDT(single_row_dt)
+    #print(dt[, 1:3])
+    fnames <- string2vector(dt[, get(fname_col)], delimeter = delims)
+    if (is.na(fnames[1]) == TRUE) fnames <- ""
+    lnames <- string2vector(dt[, get(lname_col)], delimeter = delims)
+    if (is.na(lnames[1]) == TRUE) lnames <- ""
+    for (fn in fnames) {
+        for (ln in lnames) {
+            new_dt <- data.table::copy(dt)
+            new_dt[, eval(fname_col) := fn]
+            new_dt[, eval(lname_col) := ln]
+
+            if (exists("out_dt") == TRUE) {
+                out_dt <- data.table::rbindlist(list(out_dt, new_dt))
+            }
+            else{
+                out_dt <- new_dt
+            }
+        }
+    }
+    out_dt
+}
+
+
