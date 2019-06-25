@@ -6,7 +6,7 @@
 of second separator after the first separator.}
 \usage{
 get_between_separators(string = "", first_separator = ",",
-  second_separator = ",")
+  second_separator = ",", include_sep_in_output = FALSE)
 }
 \arguments{
 \item{string}{A character string.}
@@ -14,6 +14,8 @@ get_between_separators(string = "", first_separator = ",",
 \item{first_separator}{Optional. Default ",".}
 
 \item{second_separator}{Optional. Default ",".}
+
+\item{include_sep_in_output}{Optional. Include the separators in the output. Default FALSE.}
 }
 \description{
 Return everything between first occurence of first separator and first occurence

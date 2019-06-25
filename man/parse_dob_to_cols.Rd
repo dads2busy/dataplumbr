@@ -2,7 +2,8 @@
 % Please edit documentation in R/datetime.R
 \name{parse_dob_to_cols}
 \alias{parse_dob_to_cols}
-\title{Create separate year, month, day columns from ymd or mdy formatted date.}
+\title{Parse DOB to Separate Year, Month, Day Columns
+Create separate year, month, day columns from ymd or mdy formatted date.}
 \usage{
 parse_dob_to_cols(df, date_field, date_format = "ymd")
 }
@@ -15,9 +16,13 @@ parse_dob_to_cols(df, date_field, date_format = "ymd")
 or "mdy" (Month-Day-Year). Defaults to "ymd".}
 }
 \description{
+Parse DOB to Separate Year, Month, Day Columns
 Create separate year, month, day columns from ymd or mdy formatted date.
 }
 \examples{
-fix_century("2049-11-30")
-[1] "1949-11-30"
+df_with_dob_column <- data.frame(dob = c("11/13/1968"))
+df_with_parsed_dob <- parse_dob_to_cols(df_with_dob_column, date_field = "dob", date_format = "mdy")
+df_with_parsed_dob
+         dob birth_yr birth_mo birth_dy
+1 11/13/1968     1968       11       13
 }

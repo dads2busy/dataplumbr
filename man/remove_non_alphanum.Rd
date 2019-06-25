@@ -2,17 +2,23 @@
 % Please edit documentation in R/string.R
 \name{remove_non_alphanum}
 \alias{remove_non_alphanum}
-\title{Remove non-alphanumeric characters from a string.}
+\title{Remove non-alphanumeric characters from a string.
+Optionally remove spaces.}
 \usage{
-remove_non_alphanum(string)
+remove_non_alphanum(string, keep_spaces = TRUE)
 }
 \arguments{
 \item{string}{A character string.}
+
+\item{keep_spaces}{Don't remove spaces.}
 }
 \description{
 Remove non-alphanumeric characters from a string.
+Optionally remove spaces.
 }
 \examples{
 remove_non_alphanum("222-44-6666")
 [1] "222446666"
+remove_non_alphanum("Devante Smith-Pelly", keep_spaces = F)
+[1] "DevanteSmithPelly"
 }
