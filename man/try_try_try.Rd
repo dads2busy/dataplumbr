@@ -8,6 +8,8 @@ try_try_try(x, n = 3L)
 }
 \arguments{
 \item{x}{A function.}
+
+\item{n}{Number of times to try.}
 }
 \description{
 Try running a function and get a non-error response n times

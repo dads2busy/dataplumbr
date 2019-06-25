@@ -1,6 +1,7 @@
 #' Try running a function and get a non-error response n times
 #'
 #' @param x A function.
+#' @param n Number of times to try.
 #' @export
 #' @examples
 try_try_try <- function(x, n = 3L) {
