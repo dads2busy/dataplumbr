@@ -4,9 +4,9 @@
 #' @import stringr
 #' @export
 #' @examples
-#' valid_ssn("123-45-6789")
+#' id.valid_ssn("123-45-6789")
 #' [1] FALSE
-valid_ssn <- function(ssn) {
+id.valid_ssn <- function(ssn) {
     ssn <- remove_non_alphanum(ssn)
 
     re_fmt <- "^(123456789|078051120|219099999|9\\d{8}|000\\d{6}|\\d{3}00\\d{4}|\\d{5}0000|666\\d{6})$"
@@ -30,14 +30,14 @@ valid_ssn <- function(ssn) {
 #' @export
 #' @examples
 #' ssn_df <- data.frame(ssn = c("123-45-6789", "368-96-8955", "999998888", "287-65-4321"))
-#' ssn_df <- valid_ssn_col(ssn_df, "ssn")
+#' ssn_df <- id.valid_ssn_col(ssn_df, "ssn")
 #' ssn_df
 #' ssn ssn_valid
 #' 1 123-45-6789    FALSE
 #' 2 367-94-8940     TRUE
 #' 3   999998888    FALSE
 #' 4 287-65-4321     TRUE
-add_valid_ssn_col <- function(df, ssn_field) {
+id.add_valid_ssn_col <- function(df, ssn_field) {
     dt <- data.table::setDT(df)
     dt[, paste0(ssn_field, "_valid") := valid_ssn(get(ssn_field)), ssn_field]
     data.table::setDF(dt)

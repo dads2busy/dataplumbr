@@ -3,9 +3,9 @@
 #' @param full_path Path to directory.
 #' @export
 #' @examples
-#' dir_verify_create("~/missingfolder")
+#' dir.verify_create("~/missingfolder")
 #' Creates folder named "missingfolder" in your home directory
-dir_verify_create <- function(full_path, recursive = TRUE) {
+dir.verify_create <- function(full_path, recursive = TRUE) {
     if (!file.exists(full_path)) {
         dir.create(path = full_path, recursive = recursive)
         print(sprintf("%s created", full_path))

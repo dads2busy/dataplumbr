@@ -5,7 +5,6 @@
 #' Here's an awesome trampoline by Jim Hester:
 #' @param f A function.
 #' @param ... Any number of named or unnamed arguments.
-#' @export
 #' @examples
 #' countdown <- trampoline(function(n) {
 #'   if (n > 0) recur(n-1) else "done"
@@ -25,7 +24,6 @@ trampoline <- function(f, ...) {
 #' Recur
 #'
 #' @param ... Any number of named or unnamed arguments.
-#' @export
 recur <- function(...) {
     structure(list(...), class = "recursion")
 }

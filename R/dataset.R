@@ -5,12 +5,12 @@
 #' @export
 #' @examples
 #' na_df <- data.frame(col1 = c("Hola", NA), col2 = c("Chicka", NA))
-#' na_df <- rm_all_NA_rows(na_df)
+#' na_df <- set.rm_all_NA_rows(na_df)
 #' na_df
 #'    col1   col2
 #' 1: Hola Chicka
 #' 2:   NA     NA
-rm_all_NA_rows <- function(df) {
+set.rm_all_NA_rows <- function(df) {
     dt <- data.table::setDT(df)
     na_rows <- apply(dt, 1, function(x) all(is.na(x)))
     dt <- dt[!na_rows,]
@@ -32,11 +32,11 @@ rm_all_NA_rows <- function(df) {
 #' @export
 #' @examples
 #' df <- data.frame(first_name = c("Devante"), last_name = c("Smith-Pelly"))
-#' dt <- split_hyphenated(df, "last_name")
+#' dt <- set.split_hyphenated(df, "last_name")
 #' dt
 #'    first_name last_name last_name_left last_name_right
 #' 1:    Devante     Smith          Smith           Pelly
-split_hyphenated <- function(df, name_field, return_type = "dt") {
+set.split_hyphenated <- function(df, name_field, return_type = "dt") {
     dt <- data.table::setDT(df)
     field <- dt[, get(name_field)]
     groups <- stringr::str_match(field, "(.*)-(.*)")
@@ -48,26 +48,12 @@ split_hyphenated <- function(df, name_field, return_type = "dt") {
     d
 }
 
-#' Checks if provided variable is null, na, or of length 0
-#'
-#' @param x Variable provided.
-#' @export
-#' @examples
-#' is_blank("")
-#' [1] TRUE
-is_blank <- function(x) {
-    return(is.null(x) |
-               length(x) == 0 |
-               is.na(x) |
-               x == "")
-}
-
 #' Deduplication chooser
 #' Majority rules, ties goes to lowest value after ordering, so most recent if a date or time.
 #'
 #' @param df Data.frame or data.table
 #'
-dedup_choice <- function(df) {
+set.dedup_choice <- function(df) {
     dt <- data.table::setDT(df)
     for (j in colnames(dt)) {
         data.table::set(dt, j = j, value = dt[get(j) != "", .N, j][order(-N)][, ..j][1])
@@ -75,8 +61,7 @@ dedup_choice <- function(df) {
     dt[1]
 }
 
-dedup_choice_by_key <- function(df, key = "uid") {
-    #browser()
+set.dedup_choice_by_key <- function(df, key = "uid") {
     if (exists("out_dt") == TRUE) rm(out_dt, envir = globalenv())
 
     dt <- data.table::setDT(df)
@@ -101,7 +86,7 @@ dedup_choice_by_key <- function(df, key = "uid") {
 #' @param lname_col Last name column name.
 #' @param delims Delimters to split string by.
 #' @export
-#' @example
+#' @examples
 #' dt <-
 #' data.table(
 #'   id = c(1, 2),
@@ -109,9 +94,8 @@ dedup_choice_by_key <- function(df, key = "uid") {
 #'   lname = c("Schroeder-Dingdong", "Dingbat Tumbleweed"),
 #'   dob = "11/13/1968"
 #' )
-#' final_dt <-
-#' dt[, new_row_per_string_item(.SD, fname_col = "fname", lname_col = "lname"), id]
-new_row_per_string_item <- function(single_row_dt, fname_col, lname_col, delims = "[-, ]") {
+#' final_dt <- dt[, set.new_row_per_string_item(.SD, fname_col = "fname", lname_col = "lname"), id]
+set.new_row_per_string_item <- function(single_row_dt, fname_col, lname_col, delims = "[-, ]") {
     #browser()
     dt <- data.table::setDT(single_row_dt)
     #print(dt[, 1:3])

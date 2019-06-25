@@ -7,9 +7,9 @@
 #' @examples
 #' remove_non_alphanum("222-44-6666")
 #' [1] "222446666"
-#' remove_non_alphanum("Devante Smith-Pelly", keep_spaces = F)
+#' char.remove_non_alphanum("Devante Smith-Pelly", keep_spaces = F)
 #' [1] "DevanteSmithPelly"
-remove_non_alphanum <- function(string, keep_spaces = TRUE) {
+char.remove_non_alphanum <- function(string, keep_spaces = TRUE) {
     if (keep_spaces == TRUE) out <- gsub("[^[:alnum:] ]", "", string)
     if (keep_spaces == FALSE) out <- gsub("[^[:alnum:]]", "", string)
     out
@@ -21,9 +21,9 @@ remove_non_alphanum <- function(string, keep_spaces = TRUE) {
 #' @param delimeter Optional. Default ",".
 #' @export
 #' @examples
-#' string2vector("a,b,c,d")
+#' char.string2vector("a,b,c,d")
 #' [1] "a" "b" "c" "d"
-string2vector <- function(string, delimeter=",") {
+char.string2vector <- function(string, delimeter=",") {
     unlist(strsplit(string, delimeter))
 }
 
@@ -34,9 +34,9 @@ string2vector <- function(string, delimeter=",") {
 #' @param include_sep_in_output Optional. Include the separator in the output. Default FALSE.
 #' @export
 #' @examples
-#' get_before_separator("I am smart enough, good looking enough, and gosh darn it, people like me.")
+#' char.get_before_separator("I am smart enough, good looking enough, and gosh darn it, people like me.")
 #' [1] "I am smart enough"
-get_before_first_separator <-  function(string = "", separator = ",", include_sep_in_output = FALSE) {
+char.get_before_first_separator <-  function(string = "", separator = ",", include_sep_in_output = FALSE) {
     special_chars <- c(".", "?", "#")
     if (separator %in% special_chars) sep <- paste0("\\", separator) else sep <- separator
     out <- trimws(substr(string, 1, regexpr(sep, string)))
@@ -56,9 +56,9 @@ get_before_first_separator <-  function(string = "", separator = ",", include_se
 #' str <- "I am smart enough, good looking enough, and gosh darn it; people like me."
 #' get_between_separators(str)
 #' [1] "good looking enough"
-#' get_between_separators(str, second_separator = ";")
+#' char.get_between_separators(str, second_separator = ";")
 #' [1] "good looking enough, and gosh darn it"
-get_between_separators <- function(string = "", first_separator = ",", second_separator = ",", include_sep_in_output = FALSE) {
+char.get_between_separators <- function(string = "", first_separator = ",", second_separator = ",", include_sep_in_output = FALSE) {
     special_chars <- c(".", "?", "#")
     if (first_separator %in% special_chars) first_sep <- paste0("\\", first_separator) else first_sep <- first_separator
     if (second_separator %in% special_chars) second_sep <- paste0("\\", second_separator) else second_sep <- second_separator
@@ -77,11 +77,11 @@ get_between_separators <- function(string = "", first_separator = ",", second_se
 #' @export
 #' @examples
 #' str <- "I am smart enough, good looking enough, and gosh darn it; people like me."
-#' get_after_last_separator(str, separator = ",")
+#' char.get_after_last_separator(str, separator = ",")
 #' [1] " and gosh darn it; people like me."
-#' get_after_last_separator(str, separator = ",", include_sep_in_output = T)
+#' char.get_after_last_separator(str, separator = ",", include_sep_in_output = T)
 #' [1] ", and gosh darn it; people like me."
-get_after_last_separator <- function(string = "a.b?c.net", separator = ".", include_sep_in_output = FALSE) {
+char.get_after_last_separator <- function(string = "a.b?c.net", separator = ".", include_sep_in_output = FALSE) {
     special_chars <- c(".", "?", "#")
     if (separator %in% special_chars) sep <- paste0("\\", separator) else sep <- separator
     re <- paste0(sep, "[^", sep, "]*$")
@@ -91,4 +91,14 @@ get_after_last_separator <- function(string = "a.b?c.net", separator = ".", incl
     out
 }
 
-
+#' Convert camel case to underscore separated words
+#' @param name_list List of camel case strings to convert.
+#' @export
+#' @examples
+#' char.fix_camel_case(c("I'mACamel", "NoYouAreNot"))
+#' [1] "I'm_A_Camel"    "No_You_Are_Not"
+char.fix_camel_case <- function(name_list = c("I'mACamel")) {
+    o <- gsub("([[:upper:]])", "_\\1", name_list)
+    o <- gsub("(^_)", "", o)
+    o
+}

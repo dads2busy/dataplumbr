@@ -3,8 +3,8 @@
 #' @param x A function.
 #' @param n Number of times to try.
 #' @export
-#' @examples
-try_try_try <- function(x, n = 3L) {
+#' @examples try.try_try_try(a function)
+try.try_try_try <- function(x, n = 3L) {
   response <- "failed"
   attempt <- 1
   while (response == "failed" && attempt <= n) {
