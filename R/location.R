@@ -29,5 +29,5 @@ loc.lat_lon2geo_areas<- function(place_id = "VTRC", lat = 38.880807, lon = -77.1
 #'                   latCol = c(38.880807, 38.8968325),
 #'                   lonCol = c(-77.11577, -77.1894815))
 loc.lats_lons2geo_areas <- function(place_idCol = c("VTRC", "VT-NVC"), latCol = c(38.880807, 38.8968325), lonCol = c(-77.11577, -77.1894815)) {
-    as.data.frame(t(mapply(FCClocation2FIPS, place_idCol, latCol, lonCol)))
+    as.data.frame(t(mapply(loc.lat_lon2geo_areas, place_idCol, latCol, lonCol)))
 }
