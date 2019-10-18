@@ -66,5 +66,6 @@ loc.validate_address <- function(address_1 = "",
         </AddressValidateRequest>") %>%
         stringr::str_replace_all("(\n|\\s+)", " ") %>%
         utils::URLencode()
-    return(xml2::as_list(xml2::read_xml(url)))
+    ls <- xml2::as_list(xml2::read_xml(url))
+    t(as.data.frame(lapply(ls$AddressValidateResponse, unlist)))
 }
