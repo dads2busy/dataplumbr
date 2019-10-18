@@ -44,11 +44,11 @@ loc.lats_lons2geo_areas <- function(place_idCol = c("VTRC", "VT-NVC"), latCol = 
 #' @param full_info Required. Logical value used to flag return of all response fields.
 #' @return list
 #' @export
-loc.validate_address <- function(address_1 = "1100 Wilson Blvd",
-                                 address_2 = "Suite 2910",
+loc.validate_address <- function(address_1 = "",
+                                 address_2 = "1100 Wilson Blvd",
                                  city = "Arlington",
                                  state = "VA",
-                                 zip5 = "22209",
+                                 zip5 = "",
                                  zip4 = "",
                                  full_info = TRUE,
                                  usps_userid = Sys.getenv("USPS_WEBAPI_USERNAME")) {
