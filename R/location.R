@@ -1,4 +1,5 @@
-#' Get census block, county, state, and market area information based on latitude/longitude input.
+#' Get census block, county, state, and market area information based on latitude/longitude input
+#' from the FCC API.
 #'
 #' @param place_id some unique identifier for the lat lon
 #' @param lat the latitude
