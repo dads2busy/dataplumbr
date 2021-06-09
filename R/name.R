@@ -59,11 +59,13 @@ name.standard_col_names <- function(name_list = c("first.name", "LastName"), fix
     if (fix_camel == TRUE) o <- fix_camel_case(o)
     ## standardize
     o <- tolower(o)
+    o <- gsub("%", "pct", o)
     o <- gsub("'", "", o)
     o <- gsub("[[:punct:] ]", "_", o)
     o <- gsub("_+", "_", o)
     o <- make.unique(o, sep = "_")
     o
 }
+
 
 
