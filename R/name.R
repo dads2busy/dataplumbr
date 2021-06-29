@@ -53,8 +53,10 @@ name.apply_suffix_list <- function(x, name_field, suffix_list) {
 #' [1] "first_name" "lastname"
 #' name.standard_col_names(c("first.name", "LastName"), fix_camel = T)
 #' [1] "first_name" "last_name"
-name.standard_col_names <- function(name_list = c("first.name", "LastName"), fix_camel = FALSE) {
+name.standard_col_names <- function(name_list = c("first.name", "LastName"), fix_acronyms = TRUE, fix_camel = FALSE) {
     o <- name_list
+    ## change acronyms to title case
+    if (fix_acronyms == TRUE) o <- name.fix_acronyms(o)
     ## remove camel case
     if (fix_camel == TRUE) o <- name.fix_camel_case(o)
     ## standardize
