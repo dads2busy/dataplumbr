@@ -56,7 +56,7 @@ name.apply_suffix_list <- function(x, name_field, suffix_list) {
 name.standard_col_names <- function(name_list = c("first.name", "LastName"), fix_camel = FALSE) {
     o <- name_list
     ## remove camel case
-    if (fix_camel == TRUE) o <- fix_camel_case(o)
+    if (fix_camel == TRUE) o <- name.fix_camel_case(o)
     ## standardize
     o <- tolower(o)
     o <- gsub("%", "pct", o)
@@ -64,6 +64,20 @@ name.standard_col_names <- function(name_list = c("first.name", "LastName"), fix
     o <- gsub("[[:punct:] ]", "_", o)
     o <- gsub("_+", "_", o)
     o <- make.unique(o, sep = "_")
+    o
+}
+
+#' Convert camel case to underscore separated words
+#' @param name_list List of camel case strings to convert.
+#' @export
+#' @examples
+#' name.fix_camel_case(c("I'mACamel", "NoYouAreNot"))
+#' [1] "I'm_A_Camel"    "No_You_Are_Not"
+name.fix_camel_case <- function (name_list = c("I'mACamel"))
+{
+    o <- gsub("([[:upper:]])([[:lower:][:upper:]][[:lower:]])", "_\\1\\2", name_list)
+    o <- gsub("(^_)", "", o)
+    o <- tolower(o)
     o
 }
 
