@@ -75,11 +75,34 @@ name.standard_col_names <- function(name_list = c("first.name", "LastName"), fix
 #' [1] "I'm_A_Camel"    "No_You_Are_Not"
 name.fix_camel_case <- function (name_list = c("I'mACamel"))
 {
-    o <- gsub("([[:upper:]])([[:lower:][:upper:]][[:lower:]])", "_\\1\\2", name_list)
+    o <- gsub("([[:upper:]])([[:lower:][:upper:]][[:lower:]])",
+              "_\\1\\2", name_list)
     o <- gsub("(^_)", "", o)
     o <- tolower(o)
     o
 }
 
+
+#' Change acronyms (multiple capital letters) to title case
+#' @param str List of colnames to convert.
+#' @export
+#' @examples
+#' name.fix_acronyms(c("FIPSCode", "NoAcronymHere", "Multi-APNFlag"))
+#' [1] "FipsCode"      "NoAcronymHere" "Multi-ApnFlag"
+name.fix_acronyms <- function (str = c("FIPSCode", "NoAcronymHere", "Multi-APNFlag"))
+{
+    out <- list()
+    for(i in 1:length(str)) {
+        acro <- stringr::str_match(str[i], "([:upper:][:upper:]([:upper:]+)?)[:lower:]")[2]
+        if (!is.na(acro)) {
+            acro2 <- str_sub(acro, 1, nchar(acro) - 1)
+            acro3 <- str_to_title(acro2)
+            out <- c(out, str_replace(str[i], acro2, acro3))
+        } else {
+            out <- c(out, str[i])
+        }
+    }
+    unlist(out)
+}
 
 
