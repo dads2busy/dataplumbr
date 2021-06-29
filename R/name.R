@@ -65,6 +65,7 @@ name.standard_col_names <- function(name_list = c("first.name", "LastName"), fix
     o <- gsub("'", "", o)
     o <- gsub("[[:punct:] ]", "_", o)
     o <- gsub("_+", "_", o)
+    o <- gsub("^([0-9]+)", "_\\1", o)
     o <- make.unique(o, sep = "_")
     o
 }
